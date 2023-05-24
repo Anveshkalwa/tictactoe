@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Tic Tac Toe</title>
+    <style>
+      /* CSS for styling the game board */
+     
+      body{
+        background-color: lightgoldenrodyellow;
+        font-family: Arial;
+      }
+      
+      .board {
+        display: flex;
+        flex-wrap: wrap;
+        width: 300px;
+        height: 300px;
+        border: 1px solid black;
+        margin: 0 auto;
+        background-color: lightblue;
+      }
+      
+      .cell {
+        box-sizing: border-box;
+        width: 100px;
+        height: 100px;
+        border: 1px solid black;
+        font-size: 5em;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+      }
+      
+      /* .cell:hover {
+        background-color: #eee;
+      } */
+      
+      .x {
+        color: grey;
+      }
+      
+      .o {
+        color: pink;
+      }
+    </style>
+  </head>
+  <body>
+    <center>
+    <h1>Tic Tac Toe</h1>
+    <center>
+      <button><a href="tictac.html">SINGLE GAME MODE</a></button>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+  </center>
+    <div class="board">
+      <div class="cell" id="cell-0"></div>
+      <div class="cell" id="cell-1"></div>
+      <div class="cell" id="cell-2"></div>
+      <div class="cell" id="cell-3"></div>
+      <div class="cell" id="cell-4"></div>
+      <div class="cell" id="cell-5"></div>
+      <div class="cell" id="cell-6"></div>
+      <div class="cell" id="cell-7"></div>
+      <div class="cell" id="cell-8"></div>
+    </div>
+  </center>
+    <script>
+      function toggleGameMode() {
+  isAgainstComputer = !isAgainstComputer;
+  if (isAgainstComputer) {
+    // Display message that player is now playing against computer
+  }
+}
+      // JavaScript code for handling the game logic
+      
+      let currentPlayer = "x";
+      let gameBoard = ["", "", "", "", "", "", "", "", ""];
+      
+      const cells = document.querySelectorAll(".cell");
+      cells.forEach(cell => cell.addEventListener("click", handleClick));
+      
+      function handleClick(e) {
+        const cell = e.target;
+        const cellIndex = parseInt(cell.getAttribute("id").split("-")[1]);
+        if (gameBoard[cellIndex] !== "" || checkWin()) return;
+        gameBoard[cellIndex] = currentPlayer;
+        cell.textContent = currentPlayer;
+        cell.classList.add(currentPlayer);
+        if (checkWin()) {
+          alert(currentPlayer + " wins!");
+        } else if (checkDraw()) {
+          alert("It's a draw!");
+        } else {
+          currentPlayer = currentPlayer === "x" ? "o" : "x";
+        }
+      }
+      
+      function checkWin() {
+        const winningConditions = [
+          [0, 1, 2],
+          [3, 4, 5],
+          [6, 7, 8],
+          [0, 3, 6],
+          [1, 4, 7],
+          [2, 5, 8],
+          [0, 4, 8],
+          [2, 4, 6]
+        ];
+        
+        for (let i = 0; i < winningConditions.length; i++) {
+          const [a, b, c] = winningConditions[i];
+          if (gameBoard[a] !== "" && gameBoard[a] === gameBoard[b] && gameBoard[b] === gameBoard[c]) {
+            return true;
+          }
+        }
+        return false;
+      }
+      
+      function checkDraw() {
+        return gameBoard.every(cell => cell !== "");
+      }
+    </script>
+  </body>
+</html>
